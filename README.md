@@ -17,6 +17,12 @@ now, you have to download the repository, and add it to your dependencies like s
 ppekom = {path = "your_path_to_ppekom"}
 ```
 
+This library expects the Pimage repository to be on the same level as it, like this:
+
+- WhateverFolder
+  - Pimage
+  - Ppekom
+
 ## ROADMAP
 
 This library already helped find many bugs (3, to be exact) in my Pimage library,
