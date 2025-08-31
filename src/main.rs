@@ -1,14 +1,14 @@
 use pimage::{Color, Pimage};
-use ppekom::{read_ppm, write_ppm};
+use ppekom::{load_ppm, write_ppm};
 
 fn main() {
     println!("Hello World !");
-    let image = read_ppm("test_files/first_test.pnm".to_string()).unwrap();
+    let image = load_ppm("test_files/first_test.pnm").unwrap();
     dbg!(image);
     let circle = Pimage::new(128, 72, Color::WHITE).filter(circle_filter);
-    write_ppm("test_files/write_test_1.pnm".to_string(), &circle).unwrap();
+    write_ppm("test_files/write_test_1.pnm", &circle).unwrap();
     let circle = Pimage::new(72, 128, Color::WHITE).filter(circle_filter);
-    write_ppm("test_files/write_test_2.pnm".to_string(), &circle).unwrap();
+    write_ppm("test_files/write_test_2.pnm", &circle).unwrap();
 }
 
 fn circle_filter(pimage: &Pimage, x: usize, y: usize) -> Option<Color> {

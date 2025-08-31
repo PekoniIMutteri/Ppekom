@@ -11,7 +11,7 @@ fn error<T>(string: &str) -> Result<T, Error> {
 ///
 /// Does not suport comments in the file.
 /// if a file has more data after all the pixels, this function wouldn't see it (no error).
-pub fn read_ppm(path_name: String) -> Result<Pimage, Error> {
+pub fn load_ppm(path_name: &str) -> Result<Pimage, Error> {
     let a = fs::read(path_name)?;
     let mut iter = a.iter();
 
@@ -33,7 +33,7 @@ pub fn read_ppm(path_name: String) -> Result<Pimage, Error> {
 /// Writes a Pimage to a PNM P6 (PPM) file.
 ///
 /// A PNM P6 is an uncompressed raster image (as opposed to vector image).
-pub fn write_ppm(path_name: String, pimage: &Pimage) -> Result<(), Error> {
+pub fn write_ppm(path_name: &str, pimage: &Pimage) -> Result<(), Error> {
     let mut contents = format!("P6\n{} {}\n255\n", pimage.width(), pimage.height()).into_bytes();
     let pixels: Vec<u8> = pimage
         .pixels()
@@ -90,6 +90,7 @@ fn read_number(file: &mut std::slice::Iter<'_, u8>) -> Result<usize, Error> {
         } else if (*next_char as char).is_whitespace() {
             return Ok(number);
         } else {
+            println!("next_char: {}", *next_char);
             return error("Wrong character in header.");
         };
         number = 10 * number + next_digit;
@@ -102,7 +103,7 @@ fn read_number(file: &mut std::slice::Iter<'_, u8>) -> Result<usize, Error> {
 ///     '4' -> Some(4)
 ///     'a' -> None
 fn to_digit(char: u8) -> Option<usize> {
-    if char < b'9' && char > b'0' {
+    if char.is_ascii_digit() {
         Some((char - b'0') as usize)
     } else {
         None

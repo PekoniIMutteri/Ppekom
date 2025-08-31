@@ -30,3 +30,9 @@ but as always, bugfixes.
 
 For now, I have no plan to add that, but I might someday make it compatible with
 P1 to P6 files.
+
+## Last Change
+
+BREAKING CHANGE:
+  Discovered a huge bug preventing an image which's size contained the digits 0 or
+9 from being loaded, and changed a few function arguments and names.
